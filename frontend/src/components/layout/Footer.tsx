@@ -1,4 +1,4 @@
-import { Github, Linkedin, Heart } from 'lucide-react';
+import { Github, Linkedin, Heart, Flame } from 'lucide-react';
 import { portfolioData } from '../../data/portfolio';
 
 const Footer = () => {
@@ -31,9 +31,8 @@ const Footer = () => {
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
-                        <span>Made with</span>
-                        <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
-                        <span>using React & FastAPI</span>
+                        <span>Built from scratch</span>
+                        <Flame className="w-4 h-4 text-orange-500 fill-current animate-pulse" />
                     </div>
                 </div>
             </div>

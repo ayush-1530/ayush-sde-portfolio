@@ -16,13 +16,14 @@ const Resume = () => {
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 print:p-0 print:bg-white">
             {/* Print Button - Hidden when printing */}
             <div className="max-w-[210mm] mx-auto mb-6 flex justify-end print:hidden px-4">
-                <button
-                    onClick={() => window.print()}
+                <a
+                    href="/Ayush_resume.pdf"
+                    download="Ayush_resume.pdf"
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
                 >
                     <Download className="w-4 h-4" />
                     Download PDF
-                </button>
+                </a>
             </div>
 
             {/* A4 Page Container */}
@@ -147,7 +148,15 @@ const Resume = () => {
                         <h3 className="text-lg font-bold uppercase border-b border-slate-300 mb-4 pb-1">Achievements</h3>
                         <ul className="list-disc list-outside ml-4 text-sm text-slate-700 space-y-1">
                             {portfolioData.achievements.map((ach, i) => (
-                                <li key={i}>{ach}</li>
+                                <li key={i}>
+                                    {ach.title}
+                                    {ach.description && <p className="text-xs text-slate-500">{ach.description}</p>}
+                                    {ach.url && (
+                                        <a href={ach.url} target="_blank" rel="noopener noreferrer" className="text-primary-500 underline text-xs">
+                                            Read more
+                                        </a>
+                                    )}
+                                </li>
                             ))}
                         </ul>
                     </section>

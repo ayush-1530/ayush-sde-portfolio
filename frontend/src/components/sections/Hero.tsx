@@ -171,7 +171,7 @@ const Hero = () => {
                         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
                         className="flex flex-col sm:flex-row gap-5 justify-center items-center"
                     >
-                        <a href="/resume" target="_blank" className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 flex items-center gap-2 group">
+                        <a href="/Ayush_resume.pdf" download="Ayush_resume.pdf" className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 flex items-center gap-2 group">
                             <Download className="w-5 h-5 group-hover:animate-bounce" />
                             <span>Download Resume</span>
                         </a>
