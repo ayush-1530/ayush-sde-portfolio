@@ -23,7 +23,8 @@ const Contact = () => {
         setErrorMessage('');
 
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/contact`, formData);
+            const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+            await axios.post(`${baseUrl}/contact`, formData);
             setStatus('success');
             setFormData({ name: '', email: '', message: '' });
         } catch (error: any) {

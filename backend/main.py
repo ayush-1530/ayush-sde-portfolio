@@ -32,9 +32,10 @@ async def log_requests(request: Request, call_next):
     return response
 
 # CORS configuration
-frontend_url = os.getenv("FRONTEND_URL", "")
+frontend_url = os.getenv("FRONTEND_URL", "").rstrip("/")
 
 origins = [
+    "https://ayush-sde-portfolio.vercel.app",
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
@@ -44,7 +45,7 @@ origins = [
     "http://127.0.0.1:5175",
 ]
 
-if frontend_url:
+if frontend_url and frontend_url not in origins:
     origins.append(frontend_url)
 
 app.add_middleware(
