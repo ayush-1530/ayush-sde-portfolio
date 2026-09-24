@@ -1,12 +1,12 @@
 #routes
-from fastapi import FastAPI, HTTPException, BackgroundTasks
-from pydantic import BaseModel, EmailStr
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
+from pydantic import BaseModel, EmailStr, Field
 from fastapi.middleware.cors import CORSMiddleware
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import os
 import logging
+
+from dotenv import load_dotenv
+from services.email_service import send_contact_email
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -17,9 +17,6 @@ logger.addHandler(file_handler)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(stream_handler)
-
-from fastapi import Request
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -59,84 +56,24 @@ app.add_middleware(
 )
 
 class ContactForm(BaseModel):
-    name: str
+    name: str = Field(..., min_length=1, max_length=200)
     email: EmailStr
-    message: str
+    message: str = Field(..., min_length=1, max_length=5000)
 
-def send_email_background(form: ContactForm, sender_email: str, sender_password: str, receiver_email: str):
+def _send_email_task(form: ContactForm):
     try:
-        msg = MIMEMultipart()
-        msg['From'] = f"Portfolio Contact Form <{sender_email}>"
-        msg['To'] = receiver_email
-        msg['Reply-To'] = form.email
-        msg['Subject'] = f"New Contact: {form.name}"
-
-        body = f"""
-New Contact Request
-------------------
-Name: {form.name}
-Email: {form.email}
-
-Message:
-{form.message}
-------------------
-Sent from your Portfolio Website
-"""
-        msg.attach(MIMEText(body, 'plain'))
-
-        # SMTP Configuration
-        smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-        smtp_port = int(os.getenv("SMTP_PORT", "465"))
-        
-        logger.info(f"SMTP Step 1: Starting connection to {smtp_server}:{smtp_port}")
-        
-        server = None
-        if smtp_port == 465:
-            logger.info("SMTP Step 2: Using SMTP_SSL")
-            server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=15)
-        else:
-            logger.info("SMTP Step 2: Using standard SMTP")
-            server = smtplib.SMTP(smtp_server, smtp_port, timeout=15)
-            logger.info("SMTP Step 3: Sending EHLO")
-            server.ehlo()
-            logger.info("SMTP Step 4: Starting TLS")
-            server.starttls()
-            logger.info("SMTP Step 5: Sending EHLO after TLS")
-            server.ehlo()
-            
-        logger.info("SMTP Step 6: Attempting login")
-        server.login(sender_email, sender_password)
-        
-        logger.info(f"SMTP Step 7: Sending mail to {receiver_email}")
-        refused = server.sendmail(sender_email, receiver_email, msg.as_string())
-        
-        if refused:
-            logger.error(f"Email delivery refused by SMTP server for: {refused}")
-        else:
-            logger.info(f"SMTP server accepted the message for {receiver_email}")
-            
-        server.quit()
-        logger.info(f"Background email successfully sent to {receiver_email}")
+        send_contact_email(form.name, form.email, form.message)
+    except ConnectionError:
+        logger.error("Failed to send contact email via SMTP")
     except Exception as e:
-        logger.error(f"Failed to send background email at step: {str(e)}", exc_info=True)
+        logger.error(f"Unexpected error sending email: {type(e).__name__}")
 
 @app.post("/contact")
-async def send_contact_email(form: ContactForm, background_tasks: BackgroundTasks):
+async def send_contact_email_endpoint(form: ContactForm, background_tasks: BackgroundTasks):
     logger.info(f"Received contact form submission from: {form.name}")
-    
-    sender_email = os.getenv("SENDER_EMAIL")
-    sender_password = os.getenv("SENDER_PASSWORD")
-    receiver_email = os.getenv("RECEIVER_EMAIL", "ayushnegiuk@gmail.com")
 
-    logger.info(f"Attempting to send email via {sender_email} to {receiver_email}")
+    background_tasks.add_task(_send_email_task, form)
 
-    if not sender_email or not sender_password:
-            logger.error("Email credentials missing in .env file")
-            raise HTTPException(status_code=500, detail="Server misconfiguration: Email credentials missing")
-
-    # Queue the email task to run in the background
-    background_tasks.add_task(send_email_background, form, sender_email, sender_password, receiver_email)
-    
     return {"message": "Message sent successfully!"}
 
 @app.get("/")

@@ -4,3 +4,5 @@ uvicorn
 pydantic[email]
 python-multipart
 python-dotenv
+pytest
+httpx

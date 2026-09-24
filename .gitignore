@@ -1,8 +1,49 @@
-# Environment files 
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# Environment variables
 .env
-.env.local
-.env.*.local
-backend/.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
 
 # Frontend dependencies
 frontend/node_modules/
@@ -19,11 +60,3 @@ backend/__pycache__/
 backend/*.pyc
 backend/*.pyo
 backend/.pytest_cache/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/settings.json
-*.log
