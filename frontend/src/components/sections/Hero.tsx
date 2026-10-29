@@ -105,7 +105,7 @@ function Hero() {
             personal passion.
           </motion.p>
           <motion.div
-            className="flex flex-wrap items-center gap-4"
+            className="flex flex-col items-start gap-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
@@ -113,40 +113,47 @@ function Hero() {
               duration: 0.9,
             }}
           >
-            <a
-              href="#built"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="bg-[#E8873A] hover:bg-[#F09844] text-[#07070F] font-semibold text-[13px] tracking-widest px-8 py-4 transition-colors no-underline shadow-[0_8px_30px_-8px_rgba(232,135,58,0.7)]"
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href="#built"
+                style={{ fontFamily: "var(--font-mono)" }}
+                className="bg-[#E8873A] hover:bg-[#F09844] text-[#07070F] font-semibold text-[13px] tracking-widest px-8 py-4 transition-colors no-underline shadow-[0_8px_30px_-8px_rgba(232,135,58,0.7)]"
+              >
+                VIEW MY WORK →
+              </a>
+              <a
+                href="#connect"
+                style={{ fontFamily: "var(--font-mono)" }}
+                className="border-2 border-[#E8873A] text-[#F09844] hover:bg-[#E8873A] hover:text-[#07070F] font-semibold text-[13px] tracking-widest px-8 py-4 transition-colors no-underline"
+              >
+                CONTACT ME ↗
+              </a>
+            </div>
+            <nav
+              aria-label="Social media"
+              className="grid w-full max-w-[360px] grid-cols-2 gap-3 sm:gap-4"
             >
-              VIEW MY WORK →
-            </a>
-            <a
-              href="#connect"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="border-2 border-[#E8873A] text-[#F09844] hover:bg-[#E8873A] hover:text-[#07070F] font-semibold text-[13px] tracking-widest px-8 py-4 transition-colors no-underline"
-            >
-              CONTACT ME ↗
-            </a>
-            <a
-              href="https://github.com/ayush-1530"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="inline-flex items-center gap-3 border-2 border-[#EFECE3] bg-[#EFECE3]/10 text-[#EFECE3] font-semibold hover:bg-[#EFECE3] hover:text-[#07070F] text-[13px] tracking-widest px-6 py-4 transition-colors no-underline"
-            >
-              <GithubIcon size={22} />
-              GITHUB
-            </a>
-            <a
-              href="https://www.linkedin.com/in/ayush-negi-15oct/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="inline-flex items-center gap-3 border-2 border-[#EFECE3] bg-[#EFECE3]/10 text-[#EFECE3] font-semibold hover:bg-[#EFECE3] hover:text-[#07070F] text-[13px] tracking-widest px-6 py-4 transition-colors no-underline"
-            >
-              <LinkedinIcon size={22} />
-              LINKEDIN
-            </a>
+              <a
+                href="https://github.com/ayush-1530"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontFamily: "var(--font-mono)" }}
+                className="inline-flex items-center justify-center gap-2 sm:gap-3 border-2 border-[#EFECE3] bg-[#EFECE3]/10 text-[#EFECE3] font-semibold hover:bg-[#EFECE3] hover:text-[#07070F] text-[11px] sm:text-[13px] tracking-widest px-3 sm:px-6 py-4 transition-colors no-underline"
+              >
+                <GithubIcon size={20} />
+                GITHUB
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ayush-negi-15oct/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontFamily: "var(--font-mono)" }}
+                className="inline-flex items-center justify-center gap-2 sm:gap-3 border-2 border-[#EFECE3] bg-[#EFECE3]/10 text-[#EFECE3] font-semibold hover:bg-[#EFECE3] hover:text-[#07070F] text-[11px] sm:text-[13px] tracking-widest px-3 sm:px-6 py-4 transition-colors no-underline"
+              >
+                <LinkedinIcon size={20} />
+                LINKEDIN
+              </a>
+            </nav>
           </motion.div>
         </div>
         <motion.div
