@@ -1,6 +1,6 @@
 #routes
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
-from pydantic import BaseModel, EmailStr, Field
+from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import logging
@@ -61,19 +61,30 @@ class ContactForm(BaseModel):
     email: EmailStr
     message: str = Field(..., min_length=1, max_length=5000)
 
-def _send_email_task(form: ContactForm):
-    try:
-        send_contact_email(form.name, form.email, form.message)
-    except ConnectionError:
-        logger.error("Failed to send contact email via SMTP")
-    except Exception as e:
-        logger.error(f"Unexpected error sending email: {type(e).__name__}")
+    @field_validator("name", "message", mode="before")
+    @classmethod
+    def strip_text(cls, value):
+        return value.strip() if isinstance(value, str) else value
 
 @app.post("/contact")
-async def send_contact_email_endpoint(form: ContactForm, background_tasks: BackgroundTasks):
-    logger.info(f"Received contact form submission from: {form.name}")
-
-    background_tasks.add_task(_send_email_task, form)
+def send_contact_email_endpoint(form: ContactForm):
+    # A synchronous route runs SMTP in FastAPI's thread pool. Confirm acceptance
+    # by the mail server before telling the visitor their message was sent.
+    logger.info("Received contact form submission")
+    try:
+        send_contact_email(form.name, form.email, form.message)
+    except (ConnectionError, ValueError) as error:
+        logger.error("Contact email unavailable: %s", type(error).__name__)
+        raise HTTPException(
+            status_code=503,
+            detail="Unable to send your message right now. Please try again later or contact me by email.",
+        ) from error
+    except Exception as e:
+        logger.error(f"Unexpected error sending email: {type(e).__name__}")
+        raise HTTPException(
+            status_code=500,
+            detail="Your message could not be sent. Please try again later.",
+        ) from e
 
     return {"message": "Message sent successfully!"}
 

@@ -1,85 +1,59 @@
-# Email Setup Guide for Contact Form
+# Contact form setup
 
-## Overview
-When someone fills out the contact form on your portfolio website, an email will be sent to **ayushnegiuk@gmail.com** with their details.
+The form sends `POST /contact` with `name`, `email`, and `message`. The backend sends the email through SMTP and returns success after the mail server accepts it. The visitor's email becomes the message's Reply-To address.
 
-## Setup Steps
+## Backend configuration
 
-### 1. Create a Gmail App Password
+Copy `backend/.env.example` to `backend/.env` and fill in the SMTP settings:
 
-Since you're using Gmail, you need to create an **App Password** (not your regular Gmail password) for security:
-
-1. Go to your Google Account: https://myaccount.google.com/
-2. Click on **Security** in the left sidebar
-3. Under "How you sign in to Google", enable **2-Step Verification** (if not already enabled)
-4. After enabling 2-Step Verification, go back to Security
-5. Click on **App passwords**: https://myaccount.google.com/apppasswords
-6. Select app: **Mail**
-7. Select device: **Other (Custom name)** → Type "Portfolio Backend"
-8. Click **Generate**
-9. Copy the 16-digit password (it will look like: `abcd abcd abcd abcd`)
-
-### 2. Update the `.env` File
-
-Open `backend/.env` and update:
-
-```bash
-# Your Gmail account that will SEND the emails (and also RECEIVE them)
-SENDER_EMAIL=your_email@gmail.com
-
-# Paste the 16-digit app password (remove spaces)
-SENDER_PASSWORD=abcdefghijklmnop
-
-# Note: Receiver email is now hardcoded to ayushnegiuk@gmail.com
-# You don't need to configure RECEIVER_EMAIL anymore.
+```dotenv
+SMTP_HOST=smtp.resend.com
+SMTP_PORT=465
+SMTP_USERNAME=resend
+SMTP_PASSWORD=your_smtp_password
+SMTP_FROM_EMAIL=your_verified_sender_address
+SMTP_TO_EMAIL=ayushnegiuk@gmail.com
 ```
 
-### 3. Test the Setup
+Use the host, port, username, and password supplied by your mail provider. Port 465 uses implicit TLS; other ports use STARTTLS. `SMTP_FROM_EMAIL` must be a sender your provider permits. Keep these settings on the backend; no SMTP secrets belong in frontend environment variables.
 
-1. Start the backend server:
-   ```bash
-   cd backend
-   uvicorn main:app --reload
-   ```
+Install and start the backend from `backend/`:
 
-2. Start the frontend:
-   ```bash
-   cd frontend
-   npm run dev
-   ```
+```sh
+python -m pip install -r requirements.txt
+python -m uvicorn main:app --reload --port 8000
+```
 
-3. Go to the Contact page and fill out the form
-4. Click "Send Message"
-5. ERROR CHECKING:
-   - If it fails, check the backend terminal for error messages
-   - "SMTP Authentication failed" = Wrong email or password
-   - "Connection refused" = Network issue
+## Frontend configuration
 
-## How It Works
+Start the frontend from `frontend/`:
 
-1. User fills out contact form (Name, Email, Message)
-2. Backend receives request
-3. Backend authenticates with Gmail using your `SENDER_EMAIL` creds
-4. Backend sends email **FROM** `SENDER_EMAIL` **TO** `ayushnegiuk@gmail.com`
-5. The user's email is set as "Reply-To", so when you click Reply, it goes to them.
+```sh
+npm ci
+npm run dev
+```
 
-## Troubleshooting
+Leave `VITE_API_URL` unset for local development. Vite forwards `/contact` to `http://127.0.0.1:8000`.
 
-### "Failed to send email: Authentication failed"
-- Make sure you're using an **App Password**, not your regular Gmail password
-- Ensure 2-Step Verification is enabled on your Google Account
+For a separately hosted backend, set `VITE_API_URL` to its origin and rebuild the frontend. The form appends `/contact`. The backend must allow the frontend origin through `FRONTEND_URL` or its existing CORS configuration.
 
-### "Failed to send email: Connection refused"
-- Check your internet connection
-- Make sure port 587 is not blocked by firewall
+With `VITE_API_URL` unset, Vercel forwards `/contact` to the existing Render backend using `frontend/vercel.json`. Docker Compose forwards it through Nginx to the `backend` service. Deploy the updated backend alongside the frontend so email failures produce the correct response.
 
-### Email not received
-- Check spam/junk folder
-- Verify `RECEIVER_EMAIL` is set to `ayushnegiuk@gmail.com`
-- Check backend logs for errors
+## Verification
 
-## Security Notes
+Submit the form with a valid name, email, and message. The button displays a sending state, followed by a confirmation after the SMTP server accepts the message. Check the receiving inbox and spam folder to verify final delivery.
 
-- **Never commit `.env` file to Git** (it's already in `.gitignore`)
-- The App Password is specific to this application
-- You can revoke the App Password anytime from your Google Account settings
+If SMTP is unavailable or credentials are missing, the API returns an error and the form preserves the entered message for retry. Configuration and delivery errors return HTTP 503; invalid fields return HTTP 422. Server responses do not expose SMTP credentials or provider error details.
+
+Run automated checks:
+
+```sh
+# From backend/
+python -m pytest -q
+
+# From frontend/
+npm test -- --run
+npm run build
+```
+
+Automated tests simulate SMTP and API responses. They do not send external emails.

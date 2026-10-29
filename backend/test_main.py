@@ -106,12 +106,49 @@ def test_smtp_failure_returns_safe_response(mock_send):
         "email": "test@example.com",
         "message": "Hello there"
     })
-    assert response.status_code == 200
-    assert response.json() == {"message": "Message sent successfully!"}
+    assert response.status_code == 503
+    assert "detail" in response.json()
     body = response.json()
     assert "smtp" not in str(body).lower()
     assert "api_key" not in str(body).lower()
     assert "password" not in str(body).lower()
+
+
+@pytest.mark.parametrize("field", ["name", "message"])
+@patch("main.send_contact_email")
+def test_contact_rejects_whitespace_only_fields(mock_send, field):
+    payload = {"name": "Test User", "email": "test@example.com", "message": "Hello"}
+    payload[field] = "   \n   "
+    response = client.post("/contact", json=payload)
+    assert response.status_code == 422
+    mock_send.assert_not_called()
+
+
+@patch("main.send_contact_email")
+def test_contact_trims_submitted_fields(mock_send):
+    response = client.post("/contact", json={
+        "name": "  Test User  ", "email": "test@example.com", "message": "  Hello there  "
+    })
+    assert response.status_code == 200
+    mock_send.assert_called_once_with("Test User", "test@example.com", "Hello there")
+
+
+@patch("main.send_contact_email", side_effect=ValueError("Missing SMTP config: password"))
+def test_missing_mail_configuration_returns_safe_error(mock_send):
+    response = client.post("/contact", json={
+        "name": "Test User", "email": "test@example.com", "message": "Hello"
+    })
+    assert response.status_code == 503
+    assert "password" not in response.text.lower()
+
+
+@patch("main.send_contact_email", side_effect=RuntimeError("private server details"))
+def test_unexpected_mail_failure_returns_safe_error(mock_send):
+    response = client.post("/contact", json={
+        "name": "Test User", "email": "test@example.com", "message": "Hello"
+    })
+    assert response.status_code == 500
+    assert "private server details" not in response.text
 
 
 # ── SMTP SSL Connection Sequence ─────────────────────────────

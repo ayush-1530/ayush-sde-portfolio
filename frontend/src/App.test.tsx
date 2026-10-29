@@ -1,4 +1,4 @@
-import { beforeAll, afterAll, describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   fireEvent,
   render,
@@ -7,30 +7,6 @@ import {
   within,
 } from "@testing-library/react";
 import App from "./App";
-
-beforeAll(() => {
-  vi.stubGlobal(
-    "matchMedia",
-    vi.fn((query: string) => ({
-      matches: false,
-      media: query,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-    })),
-  );
-  vi.stubGlobal(
-    "IntersectionObserver",
-    class {
-      observe() {}
-      unobserve() {}
-      disconnect() {}
-    },
-  );
-});
-
-afterAll(() => vi.unstubAllGlobals());
 
 describe("App Component", () => {
   it("renders the navbar", () => {
