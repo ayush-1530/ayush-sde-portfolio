@@ -1,137 +1,240 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
-import { Menu, X, Sun, Moon, Terminal } from 'lucide-react';
-import { useTheme } from '../../hooks/useTheme';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 
-const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const { theme, toggleTheme } = useTheme();
-    const [scrolled, setScrolled] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const navLinks = [
-        { name: 'About', to: 'about' },
-        { name: 'Skills', to: 'skills' },
-        { name: 'Experience', to: 'experience' },
-        { name: 'Projects', to: 'projects' },
-        { name: 'Contact', to: 'contact' },
-    ];
-
-    return (
-        <nav
-            className={`fixed w-full z-50 transition-all duration-300 ${scrolled
-                ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-lg border-b border-slate-200 dark:border-slate-800'
-                : 'bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm'
-                }`}
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <Link
-                        to="hero"
-                        smooth={true}
-                        className="flex-shrink-0 cursor-pointer flex items-center gap-2 group"
-                    >
-                        <div className="p-2 bg-blue-600 rounded-lg group-hover:scale-105 transition-transform">
-                            <Terminal className="h-5 w-5 text-white" />
-                        </div>
-                        <span className="font-bold text-xl text-slate-900 dark:text-white tracking-tight">
-                            Ayush.<span className="text-blue-600 dark:text-blue-400">Negi</span>
-                        </span>
-                    </Link>
-
-                    {/* Desktop Menu */}
-                    <div className="hidden md:block">
-                        <div className="ml-10 flex items-center space-x-6">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    to={link.to}
-                                    smooth={true}
-                                    offset={-70}
-                                    duration={500}
-                                    className="cursor-pointer text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group"
-                                >
-                                    {link.name}
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                                </Link>
-                            ))}
-
-                            <div className="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2"></div>
-
-                            <button
-                                onClick={toggleTheme}
-                                className="p-2 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-                                aria-label="Toggle Theme"
-                            >
-                                {theme === 'dark' ? (
-                                    <Sun className="h-5 w-5 text-yellow-500" />
-                                ) : (
-                                    <Moon className="h-5 w-5 text-slate-700" />
-                                )}
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Mobile menu button */}
-                    <div className="-mr-2 flex md:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none"
-                        >
-                            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white dark:bg-slate-900 border-t dark:border-slate-800 shadow-xl"
-                    >
-                        <div className="px-4 pt-4 pb-6 space-y-2">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    to={link.to}
-                                    smooth={true}
-                                    offset={-70}
-                                    duration={500}
-                                    onClick={() => setIsOpen(false)}
-                                    className="cursor-pointer block px-4 py-3 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                            <button
-                                onClick={() => {
-                                    toggleTheme();
-                                    setIsOpen(false);
-                                }}
-                                className="w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
-                            >
-                                {theme === 'dark' ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5" />}
-                                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-                            </button>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
+const chapters = [
+  {
+    num: "01",
+    label: "INTRO",
+    id: "intro",
+  },
+  {
+    num: "02",
+    label: "JOURNEY",
+    id: "journey",
+  },
+  {
+    num: "03",
+    label: "SYSTEMS",
+    id: "systems",
+  },
+  {
+    num: "04",
+    label: "BUILT",
+    id: "built",
+  },
+  {
+    num: "05",
+    label: "THINKING",
+    id: "thinking",
+  },
+  {
+    num: "06",
+    label: "FOUNDATION",
+    id: "foundation",
+  },
+  {
+    num: "07",
+    label: "RESEARCH",
+    id: "research",
+  },
+  {
+    num: "08",
+    label: "CONNECT",
+    id: "connect",
+  },
+];
+function Navbar() {
+  const { scrollYProgress } = useScroll();
+  const progressScale = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+  });
+  const [activeChapter, setActiveChapter] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMenuOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      desktop.removeEventListener("change", closeOnDesktop);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const idx = chapters.findIndex((c) => c.id === e.target.id);
+            if (idx >= 0) setActiveChapter(idx);
+          }
+        });
+      },
+      { threshold: 0.3 },
     );
-};
+    chapters.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-14 py-4 bg-[#07070F]/[.85] backdrop-blur border-b border-[#1A1928]">
+        <div>
+          <div
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[12px] tracking-widest text-[#EFECE3]"
+          >
+            AYUSH NEGI
+          </div>
+          <div
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[13px] tracking-widest text-[#C2BDB2] mt-0.5"
+          >
+            SOFTWARE ENGINEER
+          </div>
+        </div>
+        <nav
+          aria-label="Main navigation"
+          className="hidden md:flex items-center gap-7"
+        >
+          {[
+            {
+              label: "WORK",
+              href: "#built",
+            },
+            {
+              label: "EDUCATION",
+              href: "#foundation",
+            },
+            {
+              label: "EXPERIENCE",
+              href: "#journey",
+            },
+            {
+              label: "CONTACT",
+              href: "#connect",
+            },
+          ].map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[12px] tracking-widest text-[#C2BDB2] hover:text-[#F09844] transition-colors no-underline"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <div className="hidden md:flex items-center gap-2">
+          <div
+            className="w-1.5 h-1.5 rounded-full bg-[#E8873A]"
+            style={{ boxShadow: "0 0 5px rgba(232,135,58,0.8)" }}
+          />
+          <span
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[13px] tracking-widest text-[#C2BDB2]"
+          >
+            AVAILABLE
+          </span>
+        </div>
+        <button
+          ref={menuButton}
+          type="button"
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          className="md:hidden text-[#C2BDB2] hover:text-[#EFECE3] transition-colors"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <div className="flex flex-col gap-1.5 w-5">
+            <span
+              className={`block h-px bg-current transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
+            />
+            <span
+              className={`block h-px bg-current transition-opacity ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-px bg-current transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+            />
+          </div>
+        </button>
+      </header>
+      {menuOpen && (
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          className="fixed inset-0 z-40 bg-[#07070F]/[.96] flex flex-col items-center justify-center gap-8 md:hidden"
+        >
+          {[
+            {
+              label: "WORK",
+              href: "#built",
+            },
+            {
+              label: "EDUCATION",
+              href: "#foundation",
+            },
+            {
+              label: "EXPERIENCE",
+              href: "#journey",
+            },
+            {
+              label: "CONTACT",
+              href: "#connect",
+            },
+          ].map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-sm tracking-widest text-[#EFECE3] no-underline"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )}
+      <div className="fixed right-5 top-0 bottom-0 z-40 hidden md:flex flex-col items-center">
+        <div className="relative flex-1 w-px bg-[#1A1928] my-16">
+          <motion.div
+            className="absolute top-0 left-0 right-0 bg-[#E8873A] origin-top"
+            style={{
+              scaleY: progressScale,
+              height: "100%",
+            }}
+          />
+          {chapters.map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 -translate-x-[1.5px] rounded-full"
+              style={{
+                top: `${(i / (chapters.length - 1)) * 100}%`,
+                background: i <= activeChapter ? "#E8873A" : "#1A1928",
+                boxShadow: i <= activeChapter ? "0 0 4px #E8873A" : "none",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
 
 export default Navbar;

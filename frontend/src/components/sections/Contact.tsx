@@ -1,227 +1,282 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
-import axios from 'axios';
-import { fadeInUp } from '../../utils/animations';
-import { portfolioData } from '../../data/portfolio';
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 
-const Contact = () => {
-    // Removed single ref/inView state to allow independent visibility control
-
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setStatus('loading');
-        setErrorMessage('');
-
-        try {
-            const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
-            await axios.post(`${baseUrl}/contact`, formData);
-            setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
-        } catch (error: any) {
-            console.error('Error sending message:', error);
-            setStatus('error');
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                setErrorMessage(error.response.data.detail || error.message);
-            } else if (error.request) {
-                // The request was made but no response was received
-                setErrorMessage("No response from server. Check if backend is running.");
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                setErrorMessage(error.message);
+const links = [
+  {
+    label: "EMAIL",
+    value: "ayushnegiuk@gmail.com",
+    href: "mailto:ayushnegiuk@gmail.com",
+    copy: true,
+  },
+  {
+    label: "GITHUB",
+    value: "github.com/ayush-1530",
+    href: "https://github.com/ayush-1530",
+    copy: false,
+  },
+  {
+    label: "LINKEDIN",
+    value: "linkedin.com/in/ayush-negi-15oct",
+    href: "https://www.linkedin.com/in/ayush-negi-15oct/",
+    copy: false,
+  },
+  {
+    label: "PHONE",
+    value: "+91 9899505862",
+    href: "tel:+919899505862",
+    copy: false,
+  },
+];
+function Contact() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: "-80px",
+  });
+  const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
+  const copyTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(copyTimer.current), []);
+  const copyEmail = async () => {
+    setCopyError(false);
+    try {
+      await navigator.clipboard.writeText("ayushnegiuk@gmail.com");
+      setCopied(true);
+      clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+      setCopyError(true);
+    }
+  };
+  return (
+    <section
+      id="connect"
+      className="bg-[#07070F] py-32 px-8 md:px-14 min-h-screen flex flex-col justify-between"
+    >
+      <div className="w-full min-w-0 max-w-[1100px] mx-auto flex-1 flex flex-col justify-between">
+        <motion.div
+          ref={ref}
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          animate={
+            isInView
+              ? {
+                  opacity: 1,
+                  y: 0,
+                }
+              : {}
+          }
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex items-center gap-4 mb-14">
+            <span
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[12px] tracking-[0.35em] text-[#E8873A]"
+            >
+              08
+            </span>
+            <div className="w-6 h-px bg-[#E8873A]" />
+            <span
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[12px] tracking-[0.2em] text-[#C2BDB2]"
+            >
+              CONNECT
+            </span>
+          </div>
+        </motion.div>
+        <div className="flex-1 flex flex-col justify-center py-12">
+          <div
+            className="absolute left-0 w-[500px] h-[400px] pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse, rgba(42,30,90,0.35) 0%, transparent 70%)",
+            }}
+          />
+          <motion.h2
+            initial={{
+              opacity: 0,
+              y: 56,
+            }}
+            animate={
+              isInView
+                ? {
+                    opacity: 1,
+                    y: 0,
+                  }
+                : {}
             }
-        }
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    return (
-        <section id="contact" className="py-24 bg-white dark:bg-slate-900 transition-colors duration-300">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            transition={{
+              duration: 1,
+              delay: 0.2,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            style={{ fontFamily: "var(--font-serif)" }}
+            className="text-[clamp(48px,9vw,128px)] text-[#EFECE3] leading-[0.88] mb-6 relative z-10"
+          >
+            Have a System
+            <br />
+            <em className="not-italic text-[#C2BDB2]">Worth Building?</em>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{
+              duration: 0.8,
+              delay: 0.5,
+            }}
+            style={{ fontFamily: "var(--font-sans)" }}
+            className="text-xs text-[#C2BDB2] max-w-md mt-6 mb-16 leading-relaxed"
+          >
+            Open to backend engineering roles, distributed systems challenges,
+            and collaborations in cybersecurity infrastructure.
+          </motion.p>
+          <div className="grid lg:grid-cols-[1fr_300px] gap-12 items-start">
+            <div className="space-y-0">
+              {links.map((link, i) => (
                 <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.3 }}
-                    variants={fadeInUp}
-                    className="text-center mb-16"
+                  key={link.label}
+                  initial={{
+                    opacity: 0,
+                    x: -16,
+                  }}
+                  animate={
+                    isInView
+                      ? {
+                          opacity: 1,
+                          x: 0,
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.55 + i * 0.08,
+                  }}
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">Get In Touch</h2>
-                    <div className="w-24 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full mb-8"></div>
-                    <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
-                        Interested in collaborating or have a question? Feel free to reach out!
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-                    {/* Contact Info */}
-                    <div className="space-y-8">
-                        {[
-                            { icon: Mail, title: "Email", value: portfolioData.header.email, href: `mailto:${portfolioData.header.email}`, color: "text-blue-500", bg: "bg-blue-50 dark:bg-blue-900/20" },
-                            { icon: Phone, title: "Phone", value: portfolioData.header.phone, href: `tel:${portfolioData.header.phone}`, color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-900/20" },
-                            { icon: MapPin, title: "Location", value: portfolioData.header.location, href: "", color: "text-purple-500", bg: "bg-purple-50 dark:bg-purple-900/20" }
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: false }}
-                                variants={fadeInUp}
-                                className="flex items-start gap-6"
-                            >
-
-                                <motion.div
-                                    className={`p-4 rounded-xl ${item.bg} ${item.color}`}
-                                    animate={{
-                                        rotate: [0, 10, -10, 0],
-                                        scale: [1, 1.05, 1]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                        delay: index * 0.2
-                                    }}
-                                    whileHover={{
-                                        rotate: 360,
-                                        scale: 1.2
-                                    }}
-                                >
-                                    <item.icon className="w-6 h-6" />
-                                </motion.div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-1 text-slate-900 dark:text-white">{item.title}</h3>
-                                    {item.href ? (
-                                        <a href={item.href} className="text-slate-600 dark:text-slate-400 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                                            {item.value}
-                                        </a>
-                                    ) : (
-                                        <p className="text-slate-600 dark:text-slate-400 font-medium">{item.value}</p>
-                                    )}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Contact Form */}
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: false }}
-                        variants={fadeInUp}
+                  {link.copy ? (
+                    <button
+                      type="button"
+                      aria-label="Copy email address"
+                      onClick={copyEmail}
+                      className="w-full flex items-center justify-between py-5 border-t border-[#1A1928] hover:border-[#E8873A] group transition-colors text-left"
                     >
-                        <form onSubmit={handleSubmit} className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700">
-                            <div className="mb-6">
-                                <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white transition-all outline-none"
-                                    placeholder="Your Name"
-                                />
-                            </div>
-
-                            <div className="mb-6">
-                                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white transition-all outline-none"
-                                    placeholder="your@email.com"
-                                />
-                            </div>
-
-                            <div className="mb-6">
-                                <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message</label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    rows={4}
-                                    className="w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white transition-all outline-none"
-                                    placeholder="Your message..."
-                                />
-                            </div>
-
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                type="submit"
-                                disabled={status === 'loading'}
-                                className={`w-full py-4 px-6 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all duration-300 ${status === 'loading'
-                                    ? 'bg-slate-400 cursor-not-allowed'
-                                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg hover:shadow-blue-500/25'
-                                    }`}
-                            >
-                                {status === 'loading' ? (
-                                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                ) : (
-                                    <>
-                                        Send Message
-                                        <Mail className="w-5 h-5" />
-                                    </>
-                                )}
-                            </motion.button>
-
-                            {status === 'success' && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-xl flex items-center gap-3"
-                                >
-                                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                                    <p className="font-medium">Message sent successfully!</p>
-                                </motion.div>
-                            )}
-
-                            {status === 'error' && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl flex items-center gap-3"
-                                >
-                                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                                    <div>
-                                        <p className="font-medium">Failed to send message.</p>
-                                        <p className="text-sm mt-1 opacity-90">{errorMessage}</p>
-                                        <button
-                                            type="button"
-                                            onClick={() => setStatus('idle')}
-                                            className="mt-2 text-xs font-bold underline"
-                                        >
-                                            Try Again
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </form>
-                    </motion.div>
-                </div>
+                      <div className="min-w-0 flex-1 flex items-center gap-3 sm:gap-6">
+                        <span
+                          style={{ fontFamily: "var(--font-mono)" }}
+                          className="text-[11px] sm:text-[13px] tracking-widest text-[#9A94A8] w-14 sm:w-20 shrink-0"
+                        >
+                          {link.label}
+                        </span>
+                        <span
+                          style={{ fontFamily: "var(--font-sans)" }}
+                          className="min-w-0 break-words text-xs sm:text-sm text-[#C2BDB2] group-hover:text-[#EFECE3] transition-colors"
+                        >
+                          {link.value}
+                        </span>
+                      </div>
+                      <span
+                        aria-live="polite"
+                        style={{ fontFamily: "var(--font-mono)" }}
+                        className="ml-3 shrink-0 text-[11px] sm:text-[13px] tracking-widest text-[#9A94A8] group-hover:text-[#E8873A] transition-colors"
+                      >
+                        {copied ? "COPIED ✓" : "COPY"}
+                      </span>
+                    </button>
+                  ) : (
+                    <a
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : void 0}
+                      rel={
+                        link.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : void 0
+                      }
+                      className="flex items-center justify-between py-5 border-t border-[#1A1928] hover:border-[#E8873A] group transition-colors no-underline"
+                    >
+                      <div className="min-w-0 flex-1 flex items-center gap-3 sm:gap-6">
+                        <span
+                          style={{ fontFamily: "var(--font-mono)" }}
+                          className="text-[11px] sm:text-[13px] tracking-widest text-[#9A94A8] w-14 sm:w-20 shrink-0"
+                        >
+                          {link.label}
+                        </span>
+                        <span
+                          style={{ fontFamily: "var(--font-sans)" }}
+                          className="min-w-0 break-words text-xs sm:text-sm text-[#C2BDB2] group-hover:text-[#EFECE3] transition-colors"
+                        >
+                          {link.value}
+                        </span>
+                      </div>
+                      <span className="text-[#9A94A8] group-hover:text-[#E8873A] transition-colors">
+                        ↗
+                      </span>
+                    </a>
+                  )}
+                </motion.div>
+              ))}
+              {copyError && (
+                <p role="status" className="text-sm text-[#F09844] py-3">
+                  Couldn’t copy automatically.{" "}
+                  <a className="underline" href="mailto:ayushnegiuk@gmail.com">
+                    Email ayushnegiuk@gmail.com
+                  </a>{" "}
+                  or select the address above.
+                </p>
+              )}
             </div>
-        </section>
-    );
-};
+            <aside className="hidden lg:block relative">
+              <div className="absolute -bottom-3 -left-3 w-full h-full border border-[#E8873A]/60" />
+              <img
+                src="/images/ayush-casual.jpeg"
+                loading="lazy"
+                width={600}
+                height={750}
+                alt="Ayush Negi"
+                className="relative w-full aspect-[4/5] object-cover object-top"
+              />
+            </aside>
+          </div>
+          <motion.a
+            href="mailto:ayushnegiuk@gmail.com"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{
+              duration: 0.8,
+              delay: 1,
+            }}
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="inline-block self-start mt-12 text-[13px] font-semibold tracking-widest bg-[#E8873A] hover:bg-[#F09844] text-[#07070F] px-10 py-5 transition-colors no-underline"
+          >
+            SEND MESSAGE →
+          </motion.a>
+        </div>
+        <motion.footer
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{
+            duration: 0.8,
+            delay: 1.1,
+          }}
+          className="border-t border-[#1A1928] pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
+        >
+          <span
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[13px] tracking-widest text-[#9A94A8]"
+          >
+            AYUSH NEGI — SOFTWARE DEVELOPER ENGINEER
+          </span>
+          <span
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[13px] tracking-widest text-[#9A94A8]"
+          >
+            {`NEW DELHI, INDIA · ${new Date().getFullYear()}`}
+          </span>
+        </motion.footer>
+      </div>
+    </section>
+  );
+}
 
 export default Contact;
