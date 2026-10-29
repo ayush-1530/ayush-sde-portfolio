@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Github, Linkedin } from "lucide-react";
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const stats = [
@@ -131,8 +132,9 @@ function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               style={{ fontFamily: "var(--font-mono)" }}
-              className="border border-[#4A4660] text-[#EFECE3] hover:border-[#E8873A] hover:text-[#F09844] text-[13px] tracking-widest px-6 py-4 transition-colors no-underline"
+              className="inline-flex items-center justify-center gap-2.5 border border-[#4A4660] text-[#EFECE3] hover:border-[#E8873A] hover:text-[#F09844] text-[13px] tracking-widest px-6 py-4 transition-colors no-underline"
             >
+              <Github className="w-4 h-4 shrink-0" aria-hidden="true" />
               GITHUB ↗
             </a>
             <a
@@ -140,8 +142,9 @@ function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               style={{ fontFamily: "var(--font-mono)" }}
-              className="border border-[#4A4660] text-[#EFECE3] hover:border-[#E8873A] hover:text-[#F09844] text-[13px] tracking-widest px-6 py-4 transition-colors no-underline"
+              className="inline-flex items-center justify-center gap-2.5 border border-[#4A4660] text-[#EFECE3] hover:border-[#E8873A] hover:text-[#F09844] text-[13px] tracking-widest px-6 py-4 transition-colors no-underline"
             >
+              <Linkedin className="w-4 h-4 shrink-0" aria-hidden="true" />
               LINKEDIN ↗
             </a>
           </motion.div>

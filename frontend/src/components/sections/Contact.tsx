@@ -9,18 +9,6 @@ const links = [
     copy: true,
   },
   {
-    label: "GITHUB",
-    value: "github.com/ayush-1530",
-    href: "https://github.com/ayush-1530",
-    copy: false,
-  },
-  {
-    label: "LINKEDIN",
-    value: "linkedin.com/in/ayush-negi-15oct",
-    href: "https://www.linkedin.com/in/ayush-negi-15oct/",
-    copy: false,
-  },
-  {
     label: "PHONE",
     value: "+91 9899505862",
     href: "tel:+919899505862",
