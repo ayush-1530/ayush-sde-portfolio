@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Download } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../visual/SocialIcons";
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -120,6 +121,17 @@ function Hero() {
                 className="bg-[#E8873A] hover:bg-[#F09844] text-[#07070F] font-semibold text-[13px] tracking-widest px-8 py-4 transition-colors no-underline shadow-[0_8px_30px_-8px_rgba(232,135,58,0.7)]"
               >
                 VIEW MY WORK →
+              </a>
+              <a
+                href="/ayush-ai_cv.pdf"
+                download="ayush-ai_cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontFamily: "var(--font-mono)" }}
+                className="inline-flex items-center gap-2.5 border-2 border-[#E8873A] bg-[#E8873A]/10 text-[#F09844] hover:bg-[#E8873A] hover:text-[#07070F] font-semibold text-[13px] tracking-widest px-8 py-4 transition-all no-underline group"
+              >
+                <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+                DOWNLOAD RESUME
               </a>
               <a
                 href="#connect"

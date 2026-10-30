@@ -17,8 +17,8 @@ const Resume = () => {
             {/* Print Button - Hidden when printing */}
             <div className="max-w-[210mm] mx-auto mb-6 flex justify-end print:hidden px-4">
                 <a
-                    href="/Ayush_resume.pdf"
-                    download="Ayush_resume.pdf"
+                    href="/ayush-ai_cv.pdf"
+                    download="ayush-ai_cv.pdf"
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
                 >
                     <Download className="w-4 h-4" />

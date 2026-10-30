@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { Download } from "lucide-react";
 
 const chapters = [
   {
@@ -140,6 +141,17 @@ function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/ayush-ai_cv.pdf"
+            download="ayush-ai_cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[12px] tracking-widest text-[#E8873A] hover:text-[#F09844] transition-colors no-underline flex items-center gap-1.5"
+          >
+            <Download className="w-3.5 h-3.5" />
+            RESUME
+          </a>
         </nav>
         <div className="hidden md:flex items-center gap-2">
           <div
@@ -209,6 +221,18 @@ function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/ayush-ai_cv.pdf"
+            download="ayush-ai_cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-sm tracking-widest text-[#E8873A] hover:text-[#F09844] no-underline flex items-center gap-2"
+          >
+            <Download className="w-4 h-4" />
+            RESUME
+          </a>
         </nav>
       )}
       <div className="fixed right-5 top-0 bottom-0 z-40 hidden md:flex flex-col items-center">
