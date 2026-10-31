@@ -1,0 +1,61 @@
+{
+  "reference": "https://www.poulo.site/",
+  "fonts": {
+    "interface": "TikTok Sans",
+    "weights": [400, 500, 600],
+    "code": "ui-monospace, SFMono-Regular, Consolas, monospace"
+  },
+  "dark": {
+    "background": "#0a0a0a",
+    "foreground": "#f2f2f2",
+    "surface": "#141414",
+    "surfaceRaised": "#252525",
+    "innerSurface": "#0b0b0b",
+    "muted": "#999999",
+    "border": "#303030",
+    "divider": "#1b1b1b",
+    "primary": "#e9e9e9",
+    "primaryText": "#151515"
+  },
+  "light": {
+    "background": "#fafafa",
+    "foreground": "#171717",
+    "surface": "#f2f2f2",
+    "surfaceRaised": "#e9e9e9",
+    "innerSurface": "#ffffff",
+    "muted": "#676767",
+    "border": "#d7d7d7",
+    "divider": "#e8e8e8",
+    "primary": "#202020",
+    "primaryText": "#fafafa"
+  },
+  "typeScale": {
+    "heroDesktop": { "size": 42, "lineHeight": 1.03, "weight": 600 },
+    "heroMobile": { "size": 36, "lineHeight": 1.04, "weight": 600 },
+    "statementDesktop": { "size": 48, "lineHeight": 1.22, "weight": 500 },
+    "sectionHeading": { "size": 32, "lineHeight": 1.3, "weight": 500 },
+    "body": { "size": 16, "lineHeight": 1.6, "weight": 400 },
+    "button": { "size": 14, "lineHeight": 22, "weight": 400 }
+  },
+  "layout": {
+    "desktopFrame": 1440,
+    "mobileFrame": 390,
+    "contentMaxWidth": 1200,
+    "dockTop": 24,
+    "mobileDockTop": 20,
+    "sectionPaddingDesktop": 85,
+    "sectionPaddingMobile": 55,
+    "cardRadius": 24,
+    "innerCardRadius": 28,
+    "pillRadius": 999,
+    "pillMinHeight": 44,
+    "breakpoints": [359, 767, 1023, 1200, 1700]
+  },
+  "motion": {
+    "roleIntervalMs": 4200,
+    "roleTransitionMs": 300,
+    "accordionTransitionMs": 250,
+    "aboutHoldMs": 650,
+    "reducedMotion": "Disable role rotation, particle movement, smooth scrolling and decorative transforms."
+  }
+}
