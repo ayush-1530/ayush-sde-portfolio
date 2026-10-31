@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { BriefcaseBusiness, FlaskConical, Home, Layers, Moon, Sun, UserRound } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
+import { portfolioData } from "../../data/portfolio";
+import { GithubIcon, LinkedinIcon } from "../visual/SocialIcons";
 
 const chapters = [
   { id: "intro", label: "HOME", title: "Home", icon: Home },
@@ -41,6 +43,14 @@ export default function Navbar() {
               <span className="dock-tooltip">{title}</span>
             </a>
           ))}
+        </nav>
+        <nav className="header-socials" aria-label="Header social profiles">
+          <a className="header-social-link glass" href={portfolioData.header.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub">
+            <GithubIcon size={20} />
+          </a>
+          <a className="header-social-link glass" href={portfolioData.header.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+            <LinkedinIcon size={20} />
+          </a>
         </nav>
         <button className="theme-toggle glass" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
           {theme === "dark" ? <Sun size={18} strokeWidth={1.6} /> : <Moon size={18} strokeWidth={1.6} />}
