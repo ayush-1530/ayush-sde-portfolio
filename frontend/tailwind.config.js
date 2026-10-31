@@ -5,9 +5,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        serif: ["DM Serif Display", "Georgia", "serif"],
-        mono: ["JetBrains Mono", "Courier New", "monospace"],
+        sans: ["TikTok Sans", "system-ui", "sans-serif"],
+        serif: ["TikTok Sans", "system-ui", "sans-serif"],
+        mono: ["TikTok Sans", "system-ui", "sans-serif"],
       },
       colors: {
         devops: {

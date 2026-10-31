@@ -19,7 +19,7 @@ export const portfolioData = {
         links: {
             linkedin: "https://www.linkedin.com/in/ayush-negi-15oct/",
             github: "https://github.com/ayush-1530",
-            portfolio: "" // Placeholder: add Ayush's portfolio/domain URL here later
+            portfolio: "https://ayush-sde-portfolio.vercel.app/"
         }
     },
     education: [

@@ -1,31 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-type Theme = 'light' | 'dark';
+type Theme = "light" | "dark";
 
 export const useTheme = () => {
-    const [theme, setTheme] = useState<Theme>(() => {
-        if (typeof window !== 'undefined') {
-            const savedTheme = localStorage.getItem('theme') as Theme;
-            if (savedTheme) {
-                return savedTheme;
-            }
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                return 'dark';
-            }
-        }
-        return 'dark'; // Default to dark for DevOps aesthetic
-    });
+  const [theme, setTheme] = useState<Theme>(() => {
+    try {
+      const saved = localStorage.getItem("portfolio-theme");
+      if (saved === "light" || saved === "dark") return saved;
+    } catch { /* A theme should work when storage is unavailable. */ }
+    return "dark";
+  });
 
-    useEffect(() => {
-        const root = window.document.documentElement;
-        root.classList.remove('light', 'dark');
-        root.classList.add(theme);
-        localStorage.setItem('theme', theme);
-    }, [theme]);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    root.classList.toggle("dark", theme === "dark");
+    root.classList.toggle("light", theme === "light");
+    root.style.colorScheme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0a0a0a" : "#fafafa");
+    try { localStorage.setItem("portfolio-theme", theme); } catch { /* Optional persistence. */ }
+  }, [theme]);
 
-    const toggleTheme = () => {
-        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-    };
-
-    return { theme, toggleTheme };
+  return { theme, toggleTheme: () => setTheme(value => value === "dark" ? "light" : "dark") };
 };

@@ -1,43 +1,13 @@
-import { Github, Linkedin, Heart, Flame } from 'lucide-react';
-import { portfolioData } from '../../data/portfolio';
+import { ArrowUpRight } from "lucide-react";
+import { portfolioData } from "../../data/portfolio";
+const menu = [{ label: "Home page", href: "#intro" }, { label: "Works", href: "#built" }, { label: "Experiments", href: "#experiments" }, { label: "About me", href: "#thinking" }, { label: "Experience", href: "#journey" }, { label: "Education", href: "#foundation" }, { label: "Stack", href: "#systems" }];
 
-const Footer = () => {
-    return (
-        <footer className="bg-white dark:bg-devops-dark py-8 text-center text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-
-                    <div className="text-sm">
-                        &copy; {new Date().getFullYear()} {portfolioData.header.name}. All rights reserved.
-                    </div>
-
-                    <div className="flex space-x-6">
-                        <a
-                            href={portfolioData.header.links.github}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                            <Github className="w-5 h-5" />
-                        </a>
-                        <a
-                            href={portfolioData.header.links.linkedin}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                            <Linkedin className="w-5 h-5" />
-                        </a>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-sm">
-                        <span>Built from scratch</span>
-                        <Flame className="w-4 h-4 text-orange-500 fill-current animate-pulse" />
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
-};
-
-export default Footer;
+export default function Footer() {
+  return (
+    <footer className="site-footer">
+      <div className="footer-inner"><div className="footer-identity"><span className="availability-dot" /><span>Ayush Negi<br /><small>SOFTWARE DEVELOPER ENGINEER</small></span></div><div className="footer-link-groups"><nav aria-label="Footer navigation"><span>Menu</span>{menu.map(link => <a href={link.href} key={link.label}>{link.label}<ArrowUpRight size={13} /></a>)}</nav><nav aria-label="Contact links"><span>Contact</span><a href={`mailto:${portfolioData.header.email}`}>Email<ArrowUpRight size={13} /></a><a href={portfolioData.header.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn<ArrowUpRight size={13} /></a><a href={portfolioData.header.links.github} target="_blank" rel="noopener noreferrer">GitHub<ArrowUpRight size={13} /></a><a href="/ayush-ai_cv.pdf" download="ayush-ai_cv.pdf">Resume<ArrowUpRight size={13} /></a></nav></div></div>
+      <div className="footer-credit">NEW DELHI, INDIA · {new Date().getFullYear()} <span>Engineered by Ayush Negi</span></div>
+      <div className="footer-wordmark" aria-hidden="true">ayush</div>
+    </footer>
+  );
+}
