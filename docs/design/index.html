@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ayush Negi — Portfolio Design Preview</title>
+  <style>
+    @font-face { font-family: 'TikTok Sans'; font-weight: 400; src: url('../../frontend/public/fonts/tiktok-sans-400.ttf'); }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 48px 5vw; background: #0a0a0a; color: #f2f2f2; font-family: 'TikTok Sans',system-ui,sans-serif; }
+    header { max-width: 1500px; margin: 0 auto 40px; }
+    header p { color: #999; max-width: 700px; line-height: 1.7; }
+    h1 { font-size: clamp(28px,4vw,44px); font-weight: 500; letter-spacing: -1px; margin-bottom: 12px; }
+    nav { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    a { color: #f2f2f2; }
+    nav a { padding: 12px 20px; border-radius: 30px; border: 1px solid #3a3a3a; text-decoration: none; font-size: 13px; }
+    nav a:hover { background: #252525; }
+    .previews { max-width: 1500px; margin: auto; display: grid; grid-template-columns: 1fr 300px; gap: 28px; align-items: start; }
+    figure { margin: 0 0 30px; }
+    figcaption { color: #999; font-size: 13px; margin-bottom: 14px; }
+    img { width: 100%; display: block; border: 1px solid #303030; border-radius: 18px; }
+    section { max-width: 1500px; margin: 30px auto; }
+    h2 { font-size: 25px; font-weight: 500; }
+    .details { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    footer { max-width: 1500px; margin: 50px auto 0; color: #999; font-size: 12px; line-height: 1.8; }
+    @media(max-width:800px) { body { padding: 28px 20px; } .previews,.details { grid-template-columns: 1fr; } .mobile { max-width: 390px; margin: auto; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p>AYUSH NEGI / PORTFOLIO DESIGN</p>
+    <h1>Your information. A new experience.</h1>
+    <p>A monochrome portfolio following the visual direction of <a href="https://www.poulo.site/">poulo.site</a>, with your original engineering work, experience, skills, credentials, resume, and contact details.</p>
+    <nav aria-label="Design downloads"><a href="desktop-design.svg">Desktop SVG ↗</a><a href="mobile-design.svg">Mobile SVG ↗</a><a href="components.svg">UI components ↗</a><a href="design-tokens.json">Design tokens ↗</a><a href="README.md">Figma import guide ↗</a></nav>
+  </header>
+  <main>
+    <div class="previews"><figure><figcaption>DESKTOP / 1440 PX / DARK THEME</figcaption><a href="desktop-design.svg"><img src="desktop-hero.png" alt="Desktop portfolio hero with floating icon dock, software engineer headline and Ayush's monochrome cartoon portrait" /></a></figure><figure class="mobile"><figcaption>MOBILE / 390 PX</figcaption><a href="mobile-design.svg"><img src="mobile-hero.png" alt="Responsive mobile portfolio hero" /></a></figure></div>
+    <section><h2>Work and interaction</h2><div class="details"><figure><figcaption>PROJECTS / FILTERS / CASE STUDIES</figcaption><img src="desktop-built.png" alt="Filterable project collection and MR Review Agent case study card" loading="lazy" /></figure><figure><figcaption>SKILLS / INTERACTIVE CONSTELLATION</figcaption><img src="desktop-systems.png" alt="Engineering skill graph and complete technology list" loading="lazy" /></figure></div></section>
+    <section><h2>Let’s connect</h2><div class="details"><figure><figcaption>FOOTER / LARGE SOCIAL LINKS / EMAIL BUTTON</figcaption><img src="desktop-footer.png" alt="Redesigned footer with a prominent email button and large LinkedIn and GitHub links" loading="lazy" /></figure><figure><figcaption>FOOTER / LIGHT THEME</figcaption><img src="desktop-footer-light.png" alt="Footer in light mode" loading="lazy" /></figure></div></section>
+    <section><h2>Light theme</h2><img src="desktop-light.png" alt="Complete alternate light theme" loading="lazy" /></section>
+  </main>
+  <footer>Import the desktop and mobile SVG files into Figma. Text, layout shapes and icons remain editable. Install the included TikTok Sans fonts for matching typography. The portrait is an original imagegen asset; its prompt and location are recorded in <a href="../portfolio-redesign.md">the design notes</a>.</footer>
+</body>
+</html>
