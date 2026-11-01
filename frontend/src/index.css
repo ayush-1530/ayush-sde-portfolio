@@ -938,7 +938,7 @@
   font-size: 10px;
   margin-top: auto;
 }
-/* Full-width work chapters, filter pills, and inset application previews. */
+/* Two-column project collection, filter pills, and inset application previews. */
 .work-filters {
   display: flex;
   flex-wrap: wrap;
@@ -953,24 +953,23 @@
   font-size: 11px;
 }
 .work-list {
-  margin-top: 55px;
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  align-items: start;
+  gap: 44px 28px;
+  margin-top: 38px;
 }
 .work-project {
-  padding-top: 65px;
-  padding-bottom: 60px;
+  min-width: 0;
+  padding-top: 28px;
   border-top: 1px solid var(--divider);
 }
-.work-project:first-child {
-  padding-top: 38px;
-}
-.work-project:last-child {
-  padding-bottom: 0;
-}
 .work-project-heading {
-  margin: 0 0 40px;
+  min-height: 114px;
+  margin: 0 0 24px;
 }
 .work-project-heading h3 {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -.75px;
@@ -978,7 +977,7 @@
 .work-project-heading h3>span {
   display: block;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 14px;
   margin-top: 10px;
   font-weight: 400;
   letter-spacing: -.2px;
@@ -993,17 +992,17 @@
 }
 .project-bento {
   display: grid;
-  grid-template-columns: 1.12fr 1fr;
-  gap: 16px;
+  grid-template-columns: minmax(0,1fr);
+  gap: 12px;
 }
 .project-preview, .project-story {
   min-width: 0;
   border-radius: 24px;
   background: var(--surface-raised);
-  padding: 36px 28px 20px;
-  min-height: 395px;
+  padding: 24px 20px 18px;
 }
 .project-preview {
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1339,11 +1338,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 34px 25px 20px;
+  padding: 16px;
 }
 .project-story-inner {
-  padding: 29px 25px;
-  border-radius: 28px;
+  padding: 22px 20px;
+  border-radius: 20px;
   background: var(--inner-surface);
   flex: 1;
   display: flex;
@@ -1351,9 +1350,9 @@
   justify-content: center;
 }
 .project-description {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
-  margin-bottom: 25px;
+  margin-bottom: 16px;
 }
 .project-tech {
   margin-block: 12px;
@@ -1408,9 +1407,9 @@
 }
 .case-study-grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 30px;
-  padding: 40px 0 0;
+  grid-template-columns: minmax(0,1fr);
+  gap: 22px;
+  padding: 28px 0 0;
 }
 .case-study-grid h4 {
   font-size: 12px;
@@ -2653,6 +2652,13 @@
   }
 }
 @media (max-width:1023px) {
+  .work-list {
+    grid-template-columns: minmax(0,1fr);
+    gap: 40px;
+  }
+  .work-project-heading {
+    min-height: 0;
+  }
   .hero-section {
     padding-top: 150px;
     padding-bottom: 85px;
@@ -3227,10 +3233,6 @@
   }
   .work-project {
     padding-top: 40px;
-    padding-bottom: 40px;
-  }
-  .work-project:first-child {
-    padding-top: 30px;
   }
   .work-project-heading {
     margin-bottom: 25px;
