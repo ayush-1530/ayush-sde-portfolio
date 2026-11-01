@@ -16,6 +16,7 @@ export default function HeroPortrait() {
       element.style.setProperty("--gaze-y", "0px");
     };
     const move = (event: PointerEvent) => {
+      if (element.closest<HTMLElement>(".avatar-stage")?.dataset.characterReady === "true") return;
       if (preference.matches || event.pointerType === "touch") { reset(); return; }
       const hero = section.getBoundingClientRect();
       if (event.clientY < Math.max(hero.top, 0) || event.clientY > Math.min(hero.bottom, window.innerHeight)) { reset(); return; }

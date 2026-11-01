@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "character:export": "node scripts/export-character.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest"
@@ -21,7 +22,8 @@
     "react-router-dom": "^6.28.0",
     "react-scroll": "^1.9.3",
     "react-type-animation": "^3.2.0",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
@@ -29,6 +31,7 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-scroll": "^1.8.10",
+    "@types/three": "^0.170.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",

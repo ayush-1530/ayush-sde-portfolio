@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
 import { portfolioData } from "../../data/portfolio";
 import WeatherScene from "../visual/WeatherScene";
 import HeroPortrait from "../visual/HeroPortrait";
+import { CHARACTER_WAVE } from "../visual/character/characterMachine";
 
 const roles = ["Software Engineer", "Backend & Systems Engineer", "AI & ML Enthusiast"];
 const introductions = [
@@ -25,6 +26,11 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [reducedMotion]);
   useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => {
+    const greet = () => setHello(value => !value);
+    window.addEventListener(CHARACTER_WAVE, greet);
+    return () => window.removeEventListener(CHARACTER_WAVE, greet);
+  }, []);
   const goToAbout = () => { document.getElementById("thinking")?.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth" }); };
   const cancelHold = () => { clearTimeout(timer.current); setHolding(false); };
   const startHold = () => { setHolding(true); timer.current = setTimeout(() => { setHolding(false); goToAbout(); }, 650); };
@@ -47,7 +53,7 @@ export default function Hero() {
           <a className="resume-link" href="/ayush-ai_cv.pdf" download="ayush-ai_cv.pdf" target="_blank" rel="noopener noreferrer"><Download size={13} /> DOWNLOAD RESUME</a>
         </div>
         <div className="avatar-stage">
-          <button type="button" className={`avatar-button ${hello ? "is-waving" : ""}`} aria-label="Say hello to illustrated Ayush" onClick={() => setHello(value => !value)}>
+          <button type="button" className={`avatar-button ${hello ? "is-waving" : ""}`} aria-label="Say hello to illustrated Ayush" onClick={() => window.dispatchEvent(new Event(CHARACTER_WAVE))}>
             <HeroPortrait />
           </button>
           <span className={`avatar-hello ${hello ? "is-visible" : ""}`} role="status">Hey there. Nice to meet you! ↗</span>

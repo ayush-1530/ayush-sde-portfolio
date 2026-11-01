@@ -12,6 +12,7 @@ import Research from "../components/sections/Research";
 import Skills from "../components/sections/Skills";
 import Contact from "../components/sections/Contact";
 import PortfolioGuide from "../components/visual/PortfolioGuide";
+import CharacterGuide from "../components/visual/character/CharacterGuide";
 
 export default function LandingPage() {
   return (
@@ -33,6 +34,7 @@ export default function LandingPage() {
         </main>
         <Footer />
         <PortfolioGuide />
+        <CharacterGuide />
       </div>
     </MotionConfig>
   );
