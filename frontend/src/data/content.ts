@@ -225,6 +225,8 @@ export const certifications = [
   },
 ];
 
+export const programmingLanguages = ["Python", "Java", "JavaScript", "SQL", "C", "HTML", "CSS"];
+
 export const layers = [
   {
     layer: "AI & MACHINE LEARNING",
@@ -247,7 +249,7 @@ export const layers = [
   {
     layer: "LANGUAGES",
     depth: "L1 — FOUNDATION",
-    techs: ["Python", "JavaScript", "SQL", "C", "HTML", "CSS"],
+    techs: programmingLanguages,
     color: "#194cbe",
   },
   {

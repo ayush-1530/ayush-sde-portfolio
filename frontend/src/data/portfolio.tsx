@@ -8,6 +8,7 @@ import {
     Server,
     GitPullRequest
 } from 'lucide-react';
+import { programmingLanguages } from './content';
 
 export const portfolioData = {
     header: {
@@ -90,6 +91,12 @@ export const portfolioData = {
         }
     ],
     skillCategories: [
+        {
+            title: "Programming Languages",
+            icon: <Code2 className="w-6 h-6 text-blue-500" />,
+            skills: programmingLanguages,
+            color: "border-blue-500"
+        },
         {
             title: "Object-Oriented & API Design",
             icon: <Code2 className="w-6 h-6 text-blue-500" />,

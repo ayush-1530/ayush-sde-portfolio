@@ -7,7 +7,7 @@ export const Experience = () => {
         {
             role: 'DevOps Engineer',
             company: 'Tech Company', // User didn't specify company name, using generic or placeholder
-            period: '2023 - Present', // 1 year experience implied
+            period: '2023 - Present',
             description: 'Managing cloud infrastructure, automating deployments, and ensuring high availability.',
             achievements: [
                 'Designed and implemented CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time by 40%.',

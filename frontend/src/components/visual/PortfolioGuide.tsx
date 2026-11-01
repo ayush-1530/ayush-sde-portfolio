@@ -8,9 +8,9 @@ type Answer = { text: string; href?: string; label?: string };
 function findAnswer(question: string): Answer {
   const query = question.toLowerCase();
   if (/contact|email|reach|hire|collaborat|phone/.test(query)) return { text: `You can reach Ayush at ${portfolioData.header.email}, or +91 ${portfolioData.header.phone}. He's based in ${portfolioData.header.location}.`, href: "#connect", label: "Send a message" };
-  if (/experience|work|job|drdo|nic|zindagi|journey/.test(query)) return { text: experiences.map(item => `${item.role} at ${item.company} (${item.period}).`).join(" "), href: "#journey", label: "Explore the journey" };
+  if (/experience|work|job|drdo|nic|zindagi|journey/.test(query)) return { text: `Ayush has 2+ years of experience. ${experiences.map(item => `${item.role} at ${item.company} (${item.period}).`).join(" ")}`, href: "#journey", label: "Explore the journey" };
   if (/project|rag|agent|build|code|clock|vision/.test(query)) return { text: `Ayush’s projects include ${projects.map(item => item.title).join(", ")}. ${projects[0].description}`, href: "#built", label: "See the projects" };
-  if (/skill|stack|python|fastapi|tech|language/.test(query)) return { text: layers.map(layer => `${layer.layer}: ${layer.techs.slice(0, 5).join(", ")}.`).join(" "), href: "#systems", label: "Explore the stack" };
+  if (/skill|stack|python|java|fastapi|tech|language/.test(query)) return { text: layers.map(layer => `${layer.layer}: ${layer.techs.slice(0, 5).join(", ")}.`).join(" "), href: "#systems", label: "Explore the stack" };
   if (/educat|degree|college|university|resume|cv/.test(query)) return { text: "B.Tech Computer Science Engineering, Inderprastha Engineering College · AKTU, 2021–2025, First Division. You can download his resume for the full details.", href: "/ayush-ai_cv.pdf", label: "View resume" };
   return { text: "Ayush is a software engineer building secure, scalable backend systems at Zindagi Technologies. Outside work, he explores AI, multi-agent systems, RAG, and computer vision. Ask about his projects, experience, stack, or contact details.", href: "#thinking", label: "Get to know Ayush" };
 }
