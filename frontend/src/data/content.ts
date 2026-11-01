@@ -111,6 +111,8 @@ export const projects = [
 export const experiences = [
   {
     company: "Zindagi Technologies",
+    logo: "/images/organisations/zindagi.png",
+    affiliation: "",
     role: "Software Developer",
     period: "Apr 2025 — Present",
     type: "FULL TIME",
@@ -125,7 +127,9 @@ export const experiences = [
     active: true,
   },
   {
-    company: "National Informatics Centre",
+    company: "National Informatics Centre (NIC)",
+    logo: "/images/organisations/nic.svg",
+    affiliation: "Government of India",
     role: "Software Developer Trainee",
     period: "Feb 2025 — Mar 2025",
     type: "GOVERNMENT · GOI",
@@ -138,7 +142,9 @@ export const experiences = [
     active: false,
   },
   {
-    company: "DRDO",
+    company: "Defence Research and Development Organisation (DRDO)",
+    logo: "/images/organisations/drdo.png",
+    affiliation: "Ministry of Defence, Government of India",
     role: "Software Developer Intern",
     period: "Jul 2024 — Aug 2024",
     type: "DEFENCE · MOD",

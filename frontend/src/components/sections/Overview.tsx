@@ -1,5 +1,6 @@
-import { ArrowUpRight, AudioLines, Braces, Code2, Download, Globe2, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowUpRight, AudioLines, Braces, Code2, Download, Globe2, Sparkles } from "lucide-react";
 import { portfolioData } from "../../data/portfolio";
+import { experiences } from "../../data/content";
 
 export default function Overview() {
   return (
@@ -7,9 +8,12 @@ export default function Overview() {
       <div className="employers">
         <p>Engineering experience at</p>
         <div className="employer-logos">
-          <span><ShieldCheck size={30} strokeWidth={1.3} /><strong>Zindagi<span>TECHNOLOGIES</span></strong></span>
-          <span className="nic-logo">NIC<small>NATIONAL INFORMATICS CENTRE</small></span>
-          <span><Globe2 size={32} strokeWidth={1.2} /><strong>DRDO<span>MINISTRY OF DEFENCE</span></strong></span>
+          {experiences.map(experience => (
+            <div className="employer-brand" key={experience.company}>
+              <span className="organisation-logo"><img src={experience.logo} alt="" width="40" height="40" /></span>
+              <div><strong>{experience.company}</strong>{experience.affiliation && <small>{experience.affiliation}</small>}</div>
+            </div>
+          ))}
         </div>
       </div>
       <p className="statement">I build secure, scalable systems and turn complex workflows into <span>reliable software.</span></p>
