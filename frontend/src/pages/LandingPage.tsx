@@ -11,7 +11,6 @@ import Education from "../components/sections/Education";
 import Research from "../components/sections/Research";
 import Skills from "../components/sections/Skills";
 import Contact from "../components/sections/Contact";
-import AmbientField from "../components/visual/AmbientField";
 import PortfolioGuide from "../components/visual/PortfolioGuide";
 
 export default function LandingPage() {
@@ -19,7 +18,6 @@ export default function LandingPage() {
     <MotionConfig reducedMotion="user">
       <div className="portfolio">
         <a href="#intro" className="skip-link">Skip to content</a>
-        <AmbientField />
         <Navbar />
         <main>
           <Hero />

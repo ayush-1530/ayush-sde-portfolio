@@ -40,7 +40,7 @@ export default function Navbar() {
           {chapters.map(({ id, label, title, icon: Icon }) => (
             <a key={id} href={`#${id}`} aria-label={label} aria-current={active === id ? "location" : undefined} className={`dock-item ${active === id ? "is-active" : ""}`}>
               <Icon size={17} strokeWidth={1.65} aria-hidden="true" />
-              <span className="dock-tooltip">{title}</span>
+              <span className="dock-label">{title}</span>
             </a>
           ))}
         </nav>

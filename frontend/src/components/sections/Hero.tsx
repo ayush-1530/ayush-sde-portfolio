@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
 import { portfolioData } from "../../data/portfolio";
+import WeatherScene from "../visual/WeatherScene";
+import HeroPortrait from "../visual/HeroPortrait";
 
 const roles = ["Software Engineer", "Backend & Systems Engineer", "AI & ML Enthusiast"];
 const introductions = [
@@ -29,6 +31,7 @@ export default function Hero() {
 
   return (
     <section id="intro" className="hero-section">
+      <WeatherScene />
       <div className="hero-inner">
         <div className="hero-role">
           <h1 className="sr-only">Ayush Negi</h1>
@@ -45,7 +48,7 @@ export default function Hero() {
         </div>
         <div className="avatar-stage">
           <button type="button" className={`avatar-button ${hello ? "is-waving" : ""}`} aria-label="Say hello to illustrated Ayush" onClick={() => setHello(value => !value)}>
-            <img src="/images/ayush-avatar-mono.png" alt="Monochrome cartoon portrait of Ayush Negi, with swept-up hair and a striped shirt" width={1254} height={1254} draggable={false} />
+            <HeroPortrait />
           </button>
           <span className={`avatar-hello ${hello ? "is-visible" : ""}`} role="status">Hey there. Nice to meet you! ↗</span>
         </div>
