@@ -47,7 +47,7 @@ export default function Hero() {
           <a className="resume-link" href="/ayush-ai_cv.pdf" download="ayush-ai_cv.pdf" target="_blank" rel="noopener noreferrer"><Download size={13} /> DOWNLOAD RESUME</a>
         </div>
         <div className="avatar-stage">
-          <button type="button" className={`avatar-button ${hello ? "is-waving" : ""}`} aria-label="Say hello to illustrated Ayush" onClick={() => setHello(value => !value)}>
+          <button type="button" className="avatar-button" aria-label="Say hello to illustrated Ayush" onClick={() => setHello(value => !value)}>
             <HeroPortrait />
           </button>
           <span className={`avatar-hello ${hello ? "is-visible" : ""}`} role="status">Hey there. Nice to meet you! ↗</span>

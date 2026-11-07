@@ -65,7 +65,7 @@ export default function WeatherScene() {
       const index = Math.floor(position);
       const drift = snowDrifts[index] * (1 - position + index) + snowDrifts[Math.min(index + 1, snowDrifts.length - 1)] * (position - index);
       const dune = (Math.sin(x * 0.018) + Math.sin(x * 0.041 + 1.4)) * Math.min(snowDepth * 0.2, 2.2);
-      return height - Math.min(25, Math.min(waterDepth, 6) + snowDepth + drift + dune);
+      return height - Math.min(36, Math.min(waterDepth, 7) + snowDepth + drift + dune);
     };
 
     const waterLine = (x: number) => height - waterDepth
@@ -74,19 +74,19 @@ export default function WeatherScene() {
 
     const drawSurface = (light: boolean, delta: number) => {
       // Accumulation persists across forecasts, then slowly evaporates or melts.
-      waterDepth = Math.max(0, Math.min(16, waterDepth + delta * (opacity.rainy * 1.5 - opacity.sunny * 0.65)));
-      snowDepth = Math.max(0, Math.min(12, snowDepth + delta * (opacity.snowy * 1.8 - opacity.sunny * 0.9 - opacity.rainy * 0.6)));
+      waterDepth = Math.max(0, Math.min(22, waterDepth + delta * (opacity.rainy * 2 - opacity.sunny * 0.65)));
+      snowDepth = Math.max(0, Math.min(18, snowDepth + delta * (opacity.snowy * 2.6 - opacity.sunny * 0.9 - opacity.rainy * 0.6)));
       for (let index = 0; index < snowDrifts.length; index++) {
         snowDrifts[index] = Math.max(0, snowDrifts[index] - delta * (opacity.sunny * 0.6 + opacity.rainy * 0.4));
       }
 
       if (waterDepth > 0.1) {
-        const water = context.createLinearGradient(0, height - 22, 0, height);
-        water.addColorStop(0, light ? "rgba(117,172,217,.16)" : "rgba(102,171,218,.12)");
-        water.addColorStop(1, light ? "rgba(117,172,217,.42)" : "rgba(102,171,218,.36)");
+        const water = context.createLinearGradient(0, height - 28, 0, height);
+        water.addColorStop(0, light ? "rgba(117,172,217,.3)" : "rgba(102,171,218,.24)");
+        water.addColorStop(1, light ? "rgba(90,153,204,.6)" : "rgba(102,171,218,.52)");
         context.fillStyle = water;
-        context.strokeStyle = light ? "rgba(86,146,196,.6)" : "rgba(151,211,245,.65)";
-        context.lineWidth = 1.2;
+        context.strokeStyle = light ? "rgba(65,125,177,.8)" : "rgba(175,222,250,.88)";
+        context.lineWidth = 1.6;
         context.globalAlpha = Math.min(waterDepth / 3, 1);
         context.beginPath();
         context.moveTo(0, height);
@@ -98,6 +98,17 @@ export default function WeatherScene() {
         for (let x = 0; x <= width + 4; x += 4) {
           if (x === 0) context.moveTo(x, waterLine(x));
           else context.lineTo(x, waterLine(x));
+        }
+        context.stroke();
+        // Broken reflections make the collected water read as a shallow puddle.
+        context.strokeStyle = light ? "rgba(237,248,255,.8)" : "rgba(194,231,255,.6)";
+        context.lineWidth = 1;
+        context.beginPath();
+        for (let index = 0; index < 18; index++) {
+          const x = (index + 0.35) / 18 * width + Math.sin(elapsed * 0.8 + index) * 8;
+          const y = waterLine(x) + 3 + (index % 3) * 2;
+          context.moveTo(x, y);
+          context.lineTo(x + 10 + (index % 4) * 5, y);
         }
         context.stroke();
       }
@@ -125,13 +136,14 @@ export default function WeatherScene() {
       }
 
       if (snowDepth > 0.1) {
-        const snow = context.createLinearGradient(0, height - 32, 0, height);
-        snow.addColorStop(0, light ? "rgba(248,251,255,.98)" : "rgba(233,244,253,.94)");
-        snow.addColorStop(1, light ? "rgba(212,228,242,.95)" : "rgba(175,205,229,.86)");
+        const snow = context.createLinearGradient(0, height - 42, 0, height);
+        snow.addColorStop(0, light ? "rgba(255,255,255,1)" : "rgba(244,250,255,.98)");
+        snow.addColorStop(0.55, light ? "rgba(229,241,251,.98)" : "rgba(216,234,249,.94)");
+        snow.addColorStop(1, light ? "rgba(180,207,230,.98)" : "rgba(151,187,218,.92)");
         context.globalAlpha = Math.min(snowDepth / 3, 1);
         context.fillStyle = snow;
-        context.strokeStyle = light ? "rgba(142,174,203,.65)" : "rgba(246,252,255,.95)";
-        context.lineWidth = 1.2;
+        context.strokeStyle = light ? "rgba(111,153,190,.85)" : "rgba(250,253,255,1)";
+        context.lineWidth = 1.8;
         context.beginPath();
         context.moveTo(0, height);
         for (let x = 0; x <= width + 4; x += 4) context.lineTo(x, snowLine(x));
@@ -142,6 +154,14 @@ export default function WeatherScene() {
         for (let x = 0; x <= width + 4; x += 4) {
           if (x === 0) context.moveTo(x, snowLine(x));
           else context.lineTo(x, snowLine(x));
+        }
+        context.stroke();
+        context.strokeStyle = light ? "rgba(255,255,255,.95)" : "rgba(238,249,255,.7)";
+        context.lineWidth = 1;
+        context.beginPath();
+        for (let x = 0; x <= width + 4; x += 4) {
+          if (x === 0) context.moveTo(x, snowLine(x) + 3);
+          else context.lineTo(x, snowLine(x) + 3);
         }
         context.stroke();
       }
@@ -177,6 +197,33 @@ export default function WeatherScene() {
           const sunX = width * 0.78 + pointer.x * 55 + Math.sin(elapsed * 0.45) * 18;
           const sunY = height * 0.17 + pointer.y * 35 + Math.cos(elapsed * 0.4) * 10;
           const radius = Math.max(width * 0.32, 260);
+          if (!light) {
+            const moonlight = context.createRadialGradient(sunX, sunY, 0, sunX, sunY, radius);
+            moonlight.addColorStop(0, "rgba(161,189,224,.13)");
+            moonlight.addColorStop(0.35, "rgba(131,159,202,.05)");
+            moonlight.addColorStop(1, "rgba(131,159,202,0)");
+            context.fillStyle = moonlight;
+            context.fillRect(0, 0, width, height);
+            context.fillStyle = "rgba(223,234,248,.85)";
+            context.beginPath();
+            context.moveTo(sunX + 7, sunY - 18);
+            context.bezierCurveTo(sunX - 20, sunY - 24, sunX - 25, sunY + 15, sunX - 3, sunY + 20);
+            context.bezierCurveTo(sunX + 7, sunY + 23, sunX + 16, sunY + 17, sunX + 19, sunY + 10);
+            context.bezierCurveTo(sunX - 3, sunY + 16, sunX - 9, sunY - 6, sunX + 7, sunY - 18);
+            context.fill();
+            for (const star of particlesByWeather.sunny) {
+              const x = star.x * width + pointer.x * star.depth * 6;
+              const y = star.y * height * 0.72 + pointer.y * star.depth * 4;
+              const twinkle = 0.55 + Math.sin(elapsed * 0.7 + star.phase) * 0.25;
+              context.globalAlpha = opacity.sunny * twinkle;
+              context.fillStyle = "rgba(216,231,250,.65)";
+              context.beginPath();
+              context.arc(x, y, star.size * 0.45, 0, Math.PI * 2);
+              context.fill();
+            }
+            context.globalAlpha = opacity.sunny;
+            continue;
+          }
           const glow = context.createRadialGradient(sunX, sunY, 0, sunX, sunY, radius);
           glow.addColorStop(0, light ? "rgba(255,205,115,.32)" : "rgba(246,185,78,.18)");
           glow.addColorStop(0.3, light ? "rgba(255,218,154,.16)" : "rgba(246,185,78,.08)");
@@ -208,7 +255,7 @@ export default function WeatherScene() {
           if (particle.y >= 1 && weather !== "sunny") {
             const landing = ((particle.x % 1) + 1) % 1;
             if (weather === "rainy") {
-              waterDepth = Math.min(16, waterDepth + 0.04 * opacity.rainy);
+              waterDepth = Math.min(22, waterDepth + 0.04 * opacity.rainy);
               if (ripples.length < 45) ripples.push({ x: landing, age: 0, strength: particle.depth });
             } else {
               const center = Math.round(landing * (snowDrifts.length - 1));
