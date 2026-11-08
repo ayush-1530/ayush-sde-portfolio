@@ -1,0 +1,97 @@
+.stack-banner-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 14px;
+}
+.stack-banner-heading .small-label { font-size: 9px; letter-spacing: 1.4px; }
+.stack-motion-toggle { display: flex; align-items: center; gap: 6px; color: var(--faint); font-size: 10px; padding: 6px 0 6px 12px; }
+.stack-motion-toggle:hover { color: var(--foreground); }
+.stack-marquee { overflow: hidden; padding: 15px 0 22px; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.stack-marquee-track { display: flex; width: max-content; animation: stack-travel-right 55s linear infinite; }
+.stack-marquee-group { display: flex; align-items: center; gap: 44px; padding-right: 44px; flex-shrink: 0; }
+.stack-tech { display: flex; align-items: center; gap: 12px; min-width: 145px; color: var(--muted); padding: 4px; }
+.stack-tech-mark { display: grid; place-items: center; width: 49px; height: 49px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); font-size: 23px; font-weight: 500; transition: color .2s, border-color .2s, transform .2s; }
+.stack-tech strong { display: block; color: var(--foreground); font-size: 15px; font-weight: 500; white-space: nowrap; }
+.stack-tech small { display: block; margin-top: 5px; color: var(--faint); font: 8px var(--font-mono); letter-spacing: .7px; }
+.stack-tech:hover .stack-tech-mark { color: var(--neural-accent); border-color: var(--neural-accent); transform: translateY(-3px); }
+.stack-marquee:hover .stack-marquee-track, .stack-marquee:focus-within .stack-marquee-track, .stack-marquee.is-paused .stack-marquee-track { animation-play-state: paused; }
+/* Keyboard users get a static, scrollable row, with every technology reachable. */
+.stack-marquee:has(.stack-tech:focus-visible) { overflow-x: auto; mask-image: none; }
+.stack-marquee:has(.stack-tech:focus-visible) .stack-marquee-track { animation: none; transform: none; }
+.stack-marquee:has(.stack-tech:focus-visible) .stack-marquee-group[aria-hidden='true'] { display: none; }
+@keyframes stack-travel-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.skills-section { --neural-accent: #91acff; }
+:root[data-theme='light'] .skills-section { --neural-accent: #4462c0; }
+.neural-panel { position: relative; margin-top: 30px; border: 1px solid var(--border); border-radius: 22px; background: linear-gradient(145deg, var(--surface), var(--background) 45%, var(--surface)); overflow: hidden; }
+.neural-panel-heading { display: flex; align-items: center; justify-content: space-between; padding: 23px 27px 0; gap: 12px; }
+.neural-panel-heading .small-label { display: flex; align-items: center; gap: 8px; font-size: 8px; letter-spacing: 1.5px; }
+.neural-panel-heading > span:last-child { font-size: 10px; color: var(--faint); }
+.neural-status-dot { display: inline-block; width: 4px; height: 4px; background: var(--neural-accent); border-radius: 50%; box-shadow: 0 0 8px color-mix(in srgb, var(--neural-accent) 45%, transparent); flex-shrink: 0; }
+.skill-neural-scene { position: relative; height: 550px; isolation: isolate; }
+.neural-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.neural-hub { position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%); pointer-events: none; text-align: center; padding: 13px 17px; border: 1px solid var(--border); border-radius: 13px; background: color-mix(in srgb, var(--background) 83%, transparent); backdrop-filter: blur(9px); box-shadow: 0 6px 25px #00000006; }
+.neural-hub > span { display: block; color: var(--faint); font: 7px var(--font-mono); letter-spacing: 2px; }
+.neural-hub strong { display: block; margin-top: 5px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.neural-skill-node { position: absolute; width: 160px; min-height: 87px; padding: 8px 4px; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; border-radius: 12px; color: var(--muted); }
+.neural-node-orb { display: grid; place-items: center; width: 35px; height: 35px; margin-bottom: 8px; background: var(--background); border: 1px solid var(--border); border-radius: 50%; box-shadow: 0 3px 12px #00000008; transition: color .25s, border-color .25s, box-shadow .25s, transform .25s; }
+.neural-node-name { color: var(--muted); font-size: 12px; line-height: 1.3; transition: color .2s; }
+.neural-skill-node > small { font-size: 8px; margin-top: 5px; color: var(--faint); max-width: 100%; opacity: 0; transition: opacity .2s; }
+.neural-skill-node.is-active { z-index: 2; }
+.neural-skill-node.is-active .neural-node-orb, .neural-skill-node:hover .neural-node-orb { color: var(--neural-accent); border-color: var(--neural-accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--neural-accent) 7%, transparent), 0 0 24px color-mix(in srgb, var(--neural-accent) 15%, transparent); transform: scale(1.08); }
+.neural-skill-node.is-active .neural-node-name { color: var(--foreground); }
+.neural-skill-node.is-active > small, .neural-skill-node:hover > small { opacity: 1; }
+.neural-caption { display: flex; align-items: center; justify-content: center; gap: 8px; position: absolute; bottom: 12px; left: 0; right: 0; color: var(--faint); font-size: 9px; pointer-events: none; }
+.neural-details { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 35px; min-height: 190px; padding: 28px; border-top: 1px solid var(--border); background: color-mix(in srgb, var(--background) 55%, transparent); }
+.neural-details-copy { animation: neural-detail-in .22s ease-out; }
+.neural-details .small-label { font: 8px var(--font-mono); letter-spacing: .8px; color: var(--neural-accent); }
+.neural-details h3 { margin: 8px 0 9px; font-size: 22px; font-weight: 500; letter-spacing: -.4px; }
+.neural-details p { font-size: 12px; line-height: 1.7; color: var(--muted); max-width: 400px; }
+.neural-details-tech .project-tech { margin-top: 0; gap: 6px; }
+.neural-details-tech .project-tech > span { font-size: 9px; padding: 5px 8px; }
+.neural-details-tech > a { display: inline-flex; gap: 6px; align-items: center; font-size: 10px; margin-top: 17px; color: var(--muted); }
+.neural-details-tech > a:hover { color: var(--neural-accent); }
+.skills-section .skills-list { margin-top: 35px; }
+@keyframes neural-detail-in { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1000px) {
+  .skill-neural-scene { height: 490px; }
+  .neural-skill-node { width: 132px; }
+  .neural-node-name { font-size: 11px; }
+  .neural-skill-node > small { font-size: 7px; }
+  .neural-details { gap: 25px; }
+}
+@media (max-width: 600px) {
+  .stack-marquee-group { gap: 23px; padding-right: 23px; }
+  .stack-marquee-track { animation-duration: 48s; }
+  .stack-tech { min-width: 130px; gap: 10px; }
+  .stack-tech-mark { width: 43px; height: 43px; border-radius: 12px; }
+  .stack-tech strong { font-size: 13px; }
+  .stack-tech small { font-size: 7px; }
+  .neural-panel { margin-top: 17px; border-radius: 17px; }
+  .neural-panel-heading { padding: 18px 15px 0; }
+  .neural-panel-heading .small-label { font-size: 7px; letter-spacing: .7px; }
+  .neural-panel-heading > span:last-child { font-size: 8px; }
+  .skill-neural-scene { height: 420px; }
+  .neural-skill-node { width: 91px; padding-inline: 2px; }
+  .neural-node-orb { width: 29px; height: 29px; margin-bottom: 7px; }
+  .neural-node-orb svg { width: 14px; height: 14px; }
+  .neural-node-name { font-size: 9px; max-width: 88px; line-height: 1.4; }
+  .neural-skill-node > small { visibility: hidden; height: 0; margin: 0; }
+  .neural-hub { padding: 10px; border-radius: 10px; }
+  .neural-hub > span { font-size: 6px; letter-spacing: 1.2px; }
+  .neural-hub strong { font-size: 9px; }
+  .neural-caption { font-size: 8px; bottom: 9px; }
+  .neural-details { grid-template-columns: 1fr; gap: 18px; padding: 22px 19px; min-height: 290px; align-content: start; }
+  .neural-details h3 { font-size: 20px; }
+  .neural-details p { font-size: 11px; }
+  .neural-details-tech .project-tech > span { font-size: 8px; padding: 4px 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stack-marquee { overflow: visible; mask-image: none; }
+  .stack-marquee-track { animation: none; width: 100%; }
+  .stack-marquee-group { flex-wrap: wrap; gap: 14px; padding: 0; width: 100%; }
+  .stack-marquee-group[aria-hidden='true'] { display: none; }
+  .stack-tech { flex: 1 0 140px; }
+  .stack-motion-toggle { display: none; }
+  .neural-details-copy { animation: none; }
+}
