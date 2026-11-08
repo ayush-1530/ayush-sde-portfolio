@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BriefcaseBusiness, FlaskConical, Home, Layers, Moon, Sun, UserRound } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, Home, Layers, Moon, Sun, UserRound } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 import { portfolioData } from "../../data/portfolio";
 import { GithubIcon, LinkedinIcon } from "../visual/SocialIcons";
@@ -7,7 +7,7 @@ import { GithubIcon, LinkedinIcon } from "../visual/SocialIcons";
 const chapters = [
   { id: "intro", label: "HOME", title: "Home", icon: Home },
   { id: "built", label: "WORK", title: "Work", icon: BriefcaseBusiness },
-  { id: "experiments", label: "EXPERIMENTS", title: "Experiments", icon: FlaskConical },
+  { id: "research", label: "RESEARCH", title: "Research", icon: BookOpen },
   { id: "thinking", label: "ABOUT", title: "About", icon: UserRound },
   { id: "systems", label: "STACK", title: "Stack", icon: Layers },
 ];

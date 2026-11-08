@@ -4,7 +4,7 @@ import { ArrowUpRight, Download } from "lucide-react";
 const menu = [
   { label: "Home page", href: "#intro" },
   { label: "Works", href: "#built" },
-  { label: "Experiments", href: "#experiments" },
+  { label: "Research", href: "#research" },
   { label: "About me", href: "#thinking" },
   { label: "Experience", href: "#journey" },
   { label: "Education", href: "#foundation" },
@@ -47,7 +47,6 @@ export default function Footer() {
           <nav aria-label="Footer resources">
             <span>More</span>
             <a href="#connect">Contact<ArrowUpRight size={13} aria-hidden="true" /></a>
-            <a href="#research">Research<ArrowUpRight size={13} aria-hidden="true" /></a>
             <a href="/ayush-ai_cv.pdf" download="ayush-ai_cv.pdf">
               Resume<Download size={13} aria-hidden="true" />
             </a>

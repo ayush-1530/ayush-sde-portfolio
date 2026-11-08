@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const greetings = [
   "Hi, I’m Ayush. Scroll down and I’ll show you around.",
-  "Secure systems at work. AI experiments after hours.",
+  "Secure systems at work. Research after hours.",
   "Have something in mind? Let’s connect below!",
 ];
 
