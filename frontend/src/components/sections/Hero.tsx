@@ -7,8 +7,8 @@ import HeroPortrait from "../visual/HeroPortrait";
 
 const roles = ["Software Engineer", "Backend & Systems Engineer", "AI & ML Enthusiast"];
 const introductions = [
-  { title: "Hi, I’m Ayush Negi", text: "I build secure, scalable systems and turn complex workflows into reliable software — from national-scale cybersecurity infrastructure at Zindagi Technologies." },
-  { title: "I build secure, scalable systems", text: "Software Developer focused on building secure and scalable backend systems, with exposure to cybersecurity simulation and system-level design." },
+  { title: "Hi, I’m Ayush Negi", text: "I’m currently building backend systems that power national-scale cybersecurity infrastructure at Zindagi Technologies." },
+  { title: "Backend engineering is my day job", text: "My work spans backend development, cybersecurity simulation, and system-level design." },
   { title: "AI is my after-hours curiosity", text: "Outside work, I'm an AI enthusiast building AI systems as a personal passion." },
 ];
 
