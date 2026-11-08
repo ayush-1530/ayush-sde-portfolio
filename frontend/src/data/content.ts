@@ -193,8 +193,8 @@ export const education = [
     institution: "Hansraj Smarak Senior Secondary",
     type: "SECONDARY EDUCATION",
     period: "July 2021",
-    detail: "Science Stream",
-    note: "Mathematics, Physics, Computer Science",
+    detail: "Non Medical Stream · First Division",
+    note: "Mathematics, Physics, Chemistry",
   },
 ];
 
